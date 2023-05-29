@@ -81,7 +81,8 @@ void CCSrc::connect(Route* routeout, Route* routeback, CCSink& sink, simtime_pic
 
 void CCSrc::processNack(const CCNack& nack){    
     //cout << "CC " << _name << " got NACK " <<  nack.ackno() << _highest_sent << " at " << timeAsMs(eventlist().now()) << " us" << endl;    
-    _nacks_received ++;    
+   	cout<<"test\n";
+      	_nacks_received ++;    
     _flightsize -= _mss;    
     
     if (nack.ackno()>=_next_decision) {    
