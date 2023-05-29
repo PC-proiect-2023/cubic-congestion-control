@@ -12,6 +12,7 @@ using namespace std;
 //  CC SOURCE. Aici este codul care ruleaza pe transmitatori. Tot ce avem nevoie pentru a implementa
 //  un algoritm de congestion control se gaseste aici.
 ////////////////////////////////////////////////////////////////
+//test//
 int CCSrc::_global_node_count = 0;
 
 CCSrc::CCSrc(EventList &eventlist)
