@@ -110,10 +110,28 @@ void CCSrc::processAck(const CCAck& ack) {
     if (_cwnd < _ssthresh)    
         _cwnd += _mss;    
     else    
-        _cwnd += _mss*_mss / _cwnd;    
+        // _cwnd += _mss*_mss / _cwnd;
+    {
+        // Cubic congestion control
+        double cubic_beta = 0.7;
+        double cubic_c = 0.4;
+        double _w_max = 1000;
+
+        simtime_picosec now = eventlist().now();
+        simtime_picosec last_reduction_time = ack.ts;
+        simtime_picosec elapsed_time_T = now - last_reduction_time; 
+
+        double k = cbrt(_w_max * (1 - cubic_beta) / cubic_beta);
+
+        _cwnd = cubic_c * (elapsed_time_T - k) * (elapsed_time_T - k) * (elapsed_time_T - k) + _w_max;
+
+        if (_cwnd < _mss) {
+            _cwnd = _mss;
+        }
+    }    
     
     //cout << "CWNDI " << _cwnd/_mss << endl;    
-}    
+}  
 
 
 /* Functia de receptie, in functie de ce primeste cheama processLoss sau processACK */
