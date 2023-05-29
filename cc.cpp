@@ -118,8 +118,8 @@ void CCSrc::processAck(const CCAck& ack) {
         double _w_max = 1000;
 
         simtime_picosec now = eventlist().now();
-        simtime_picosec last_reduction_time = ack.ts;
-        simtime_picosec elapsed_time_T = now - last_reduction_time; 
+        simtime_picosec last_reduction_time = ack.ts();
+        double elapsed_time_T = now - last_reduction_time; 
 
         double k = cbrt(_w_max * (1 - cubic_beta) / cubic_beta);
 
