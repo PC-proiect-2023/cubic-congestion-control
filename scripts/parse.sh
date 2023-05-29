@@ -1,3 +1,4 @@
+#!/bin/bash
 dir=tmp/t/ && (( $# > 1 )) && dir=$2
 
 rm -rf $dir/*.dat
