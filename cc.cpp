@@ -83,7 +83,7 @@ void CCSrc::connect(Route* routeout, Route* routeback, CCSink& sink, simtime_pic
 void CCSrc::processNack(const CCNack& nack){    
     //cout << "CC " << _name << " got NACK " <<  nack.ackno() << _highest_sent << " at " << timeAsMs(eventlist().now()) << " us" << endl;    
    	cout<<"test\n";
-      	_nacks_received ++;    
+    _nacks_received ++;    
     _flightsize -= _mss;    
     
     if (nack.ackno()>=_next_decision) {    
@@ -121,9 +121,9 @@ void CCSrc::processAck(const CCAck& ack) {
         simtime_picosec last_reduction_time = ack.ts();
         double elapsed_time_T = now - last_reduction_time; 
 
-        double k = cbrt(_w_max * (1 - cubic_beta) / cubic_beta);
+        double k = cbrt(_w_max * cubic_beta / cubic_c);
 
-        _cwnd = cubic_c * (elapsed_time_T - k) * (elapsed_time_T - k) * (elapsed_time_T - k) + _w_max;
+        _cwnd = cubic_c * pow((elapsed_time_T - k), 3) + _w_max;
 
         if (_cwnd < _mss) {
             _cwnd = _mss;
